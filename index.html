@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GeoFix - Login</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="style-second.css">
+</head>
+<body>
+
+  <!-- Background overlay structure -->
+  <div class="background-wrapper">
+    <div class="overlay"></div>
+  </div>
+
+  <!-- Header Section with Navigation Controls -->
+  <header class="header-nav">
+    <nav aria-label="Quick Actions">
+      <button type="button" class="btn-vision" onclick="navigateToFeed()">
+        &#128161; Campus Visions
+      </button>
+    </nav>
+  </header>
+
+  <!-- Main Content: Centered Login Card -->
+  <main class="page-container">
+    <section class="card login-card">
+      
+      <!-- Card Branding Header -->
+      <header class="brand-header">
+        <img src="logo_ff.png" alt="GeoFix Logo" class="logo-image">
+        <h2>GeoFix Gateway</h2>
+        <p class="subtitle">Smart Campus Facilities Portal</p>
+      </header>
+
+      <!-- User Login Form -->
+      <form id="loginForm" method="post" action="#">
+        
+        <div class="form-group">
+          <label for="username">Username</label>
+          <input 
+            type="text" 
+            id="username" 
+            name="username" 
+            placeholder="Enter 'admin' or student ID" 
+            required
+          >
+        </div>
+
+        <div class="form-group">
+          <label for="password">Password</label>
+          <input 
+            type="password" 
+            id="password" 
+            name="password" 
+            placeholder="Enter Password" 
+            required
+          >
+        </div>
+
+        <button type="submit" id="submitBtn" class="btn-submit">
+          Login To Portal
+        </button>
+
+      </form>
+
+      <!-- Card Information and Links Footer -->
+      <footer class="card-footer">
+        <div class="login-hint">
+          <p>Type <strong>admin</strong> for Master Admin.</p>
+          <p>Type <strong>warden</strong> for Hostel Warden.</p>
+          <p>Type <strong>welfare</strong> for Student Welfare Wing.</p>
+          <p>Type anything else for <strong>Student Dashboard</strong>.</p>
+        </div>
+
+        <hr class="separator">
+
+        <section class="improvement-section">
+          <p class="proposal-text">Want to propose a campus improvement?</p>
+          <button type="button" class="btn-public-feed" onclick="navigateToFeed()">
+            Explore Public Feed &rarr;
+          </button>
+        </section>
+      </footer>
+
+    </section>
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>

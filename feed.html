@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GeoFix - Campus Visions</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="style-second.css">
+</head>
+<body>
+
+  <!-- Top Navigation Bar -->
+  <header class="navbar">
+    <div class="nav-brand">
+      <img src="logo_ff.png" alt="GeoFix Logo">
+      <h1>GeoFix Portal</h1>
+      <span class="nav-badge" style="background-color: #ecfdf5; color: #065f46;">Campus Visions</span>
+    </div>
+
+    <nav class="nav-links" aria-label="Campus Visions Navigation">
+      <button type="button" class="nav-btn nav-btn-green" onclick="toggleProposalForm()">+ Propose Idea</button>
+      <a href="dashboard.html" class="nav-btn">My Dashboard</a>
+      <a href="index.html" class="nav-btn" onclick="logoutUser()">Logout</a>
+    </nav>
+  </header>
+
+  <!-- Main Content Container -->
+  <main class="container" style="max-width: 800px;">
+    
+    <header class="page-header">
+      <h2>Campus Visions & Student Initiatives &#128161;</h2>
+      <p>Propose new facility improvements. Ideas with 50+ upvotes are forwarded directly to the university administration.</p>
+    </header>
+
+    <!-- Proposal Form (Toggleable or shown on demand) -->
+    <section id="proposalFormCard" class="card" style="display: none;">
+      <h3 class="card-title">Propose a New Campus Improvement</h3>
+      
+      <form onsubmit="handleNewIdea(event)">
+        <div class="form-group">
+          <label for="ideaTitle">Proposal Title</label>
+          <input 
+            type="text" 
+            id="ideaTitle" 
+            placeholder="e.g. Filtered Cold Water Dispenser near Block 34" 
+            required
+          >
+        </div>
+
+        <div class="form-group">
+          <label for="ideaLocation">Target Area / Block</label>
+          <input 
+            type="text" 
+            id="ideaLocation" 
+            placeholder="e.g. Central Library Lawns or Block 34" 
+            required
+          >
+        </div>
+
+        <div class="form-group">
+          <label for="ideaDesc">Proposal Details</label>
+          <textarea 
+            id="ideaDesc" 
+            rows="3" 
+            placeholder="Explain why this improvement is needed for students..." 
+            required
+          ></textarea>
+        </div>
+
+        <div class="form-group">
+          <label for="ideaPhoto">Attach Photo (Optional)</label>
+          <input 
+            type="file" 
+            id="ideaPhoto" 
+            accept="image/*"
+          >
+        </div>
+
+        <div style="display: flex; gap: 10px;">
+          <button type="submit" class="btn-primary" style="flex: 1;">Post Proposal</button>
+          <button type="button" class="btn-secondary" onclick="toggleProposalForm()">Cancel</button>
+        </div>
+      </form>
+    </section>
+
+    <!-- Feed List Container -->
+    <section id="feedContainer" aria-label="Campus Initiatives Feed">
+      
+      <!-- Existing Initiative Card 1 -->
+      <article class="idea-card">
+        <img src="default-img.webp" alt="Campus Open Study Space" class="idea-image">
+        <h3>Open-Air Study Lounge (Block 34)</h3>
+        <p>
+          Creating an open-air shaded seating area with Wi-Fi access and power sockets near Block 34 lawn so students can study between lectures.
+        </p>
+        <p style="font-size: 12px; color: #6b7280; margin-bottom: 12px;">
+          Proposed by: <strong>Siddharth Kumar (B.Tech CSE)</strong>
+        </p>
+
+        <footer class="idea-footer">
+          <span class="vote-counter" id="voteCount1">48 / 50 Upvotes</span>
+          <div style="display: flex; gap: 8px;">
+            <button type="button" class="btn-vote" onclick="upvoteIdea('voteCount1')">&#128640; Upvote</button>
+            <button type="button" class="nav-btn" onclick="joinInitiativeTeam(this)">&#129309; Join Initiative</button>
+          </div>
+        </footer>
+      </article>
+
+      <!-- Existing Initiative Card 2 -->
+      <article class="idea-card">
+        <h3>Solar-Powered Mobile Charging Kiosks</h3>
+        <p>
+          Installing eco-friendly solar charging benches outside Central Library and Student Centre for students needing quick battery recharge.
+        </p>
+        <p style="font-size: 12px; color: #6b7280; margin-bottom: 12px;">
+          Proposed by: <strong>Ananya Sharma (ECE)</strong>
+        </p>
+
+        <footer class="idea-footer">
+          <span class="vote-counter" id="voteCount2">32 / 50 Upvotes</span>
+          <div style="display: flex; gap: 8px;">
+            <button type="button" class="btn-vote" onclick="upvoteIdea('voteCount2')">&#128640; Upvote</button>
+            <button type="button" class="nav-btn" onclick="joinInitiativeTeam(this)">&#129309; Join Initiative</button>
+          </div>
+        </footer>
+      </article>
+
+    </section>
+
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>
