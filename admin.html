@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GeoFix - Admin Dashboard</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="style-second.css">
+</head>
+<body>
+
+  <!-- Top Navigation Bar -->
+  <header class="navbar">
+    <div class="nav-brand">
+      <img src="logo_ff.png" alt="GeoFix Logo">
+      <h1>GeoFix Portal</h1>
+      <span class="nav-badge" style="background-color: #1e293b; color: #38bdf8;">Admin</span>
+    </div>
+
+    <nav class="nav-links" aria-label="Admin Navigation">
+      <span id="adminWelcomeText" style="font-size: 13px; color: #ffffff;">Welcome, <strong>Master Admin</strong></span>
+      <a href="index.html" class="nav-btn" onclick="logoutUser()">Logout</a>
+    </nav>
+  </header>
+
+  <!-- Main Content Container -->
+  <main class="container">
+    
+    <header class="page-header">
+      <h2 id="adminPageTitle">University Master Dashboard</h2>
+      <p id="adminPageSubtitle">Overview of all campus maintenance complaints and infrastructure tickets.</p>
+    </header>
+
+    <!-- ========================================================
+         1. MAINTENANCE SECTION (Visible for Master Admin & Warden)
+         ======================================================== -->
+    <div id="maintenance-only">
+      <!-- KPI Summary Row (Using Simple CSS Flex) -->
+      <section class="stats-grid" aria-label="Complaint Statistics">
+        <article class="stat-card">
+          <h3>Total Complaints</h3>
+          <p class="stat-number" id="statTotal">4</p>
+        </article>
+
+        <article class="stat-card">
+          <h3>Pending Actions</h3>
+          <p class="stat-number stat-pending" id="statPending">3</p>
+        </article>
+
+        <article class="stat-card">
+          <h3>Resolved Issues</h3>
+          <p class="stat-number stat-resolved" id="statResolved">1</p>
+        </article>
+      </section>
+
+      <!-- Complaints Data Table Card -->
+      <section class="card">
+        <h3 class="card-title">Active Maintenance Tickets</h3>
+
+        <div class="table-responsive">
+          <table id="complaintsTable">
+            <thead>
+              <tr>
+                <th>Ticket ID</th>
+                <th>Issue Description</th>
+                <th>Category</th>
+                <th>Location</th>
+                <th>Reported By</th>
+                <th>Status</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody id="tableBody">
+              <tr data-status="Pending">
+                <td><strong>TKT-101</strong></td>
+                <td>Water Cooler Pipe Leakage</td>
+                <td>Plumbing</td>
+                <td>Block 34, 2nd Floor</td>
+                <td>Siddharth (RK2P26BZB51)</td>
+                <td><span class="badge badge-pending">Pending</span></td>
+                <td><button type="button" class="btn-action" onclick="resolveTicket(this, 'TKT-101')">Resolve</button></td>
+              </tr>
+              <tr data-status="Resolved">
+                <td><strong>TKT-102</strong></td>
+                <td>Broken Corridor Light Bulb</td>
+                <td>Electrical</td>
+                <td>Hostel B7, Ground Floor</td>
+                <td>S (RK2P26B123)</td>
+                <td><span class="badge badge-resolved">Resolved</span></td>
+                <td><span style="color: #6b7280; font-size: 12px;">Completed</span></td>
+              </tr>
+              <tr data-status="Pending">
+                <td><strong>TKT-103</strong></td>
+                <td>AC Not Cooling Properly</td>
+                <td>Electrical</td>
+                <td>Lab 4, Block 28</td>
+                <td>Roshan (RK2P26B456)</td>
+                <td><span class="badge badge-pending">Pending</span></td>
+                <td><button type="button" class="btn-action" onclick="resolveTicket(this, 'TKT-103')">Resolve</button></td>
+              </tr>
+              <tr data-status="Pending">
+                <td><strong>TKT-104</strong></td>
+                <td>Projector HDMI Cable Missing</td>
+                <td>IT & Wi-Fi</td>
+                <td>Room 102, Block 34</td>
+                <td>Aman (RK2P26B789)</td>
+                <td><span class="badge badge-pending">Pending</span></td>
+                <td><button type="button" class="btn-action" onclick="resolveTicket(this, 'TKT-104')">Resolve</button></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+    </div>
+
+    <!-- ========================================================
+         2. STUDENT WELFARE SECTION (Visible for Welfare Officer)
+         ======================================================== -->
+    <section id="welfare-ideas-section" class="card" style="display: none;">
+      <div style="margin-bottom: 16px; padding-bottom: 10px; border-bottom: 1px solid #f3f4f6;">
+        <h3 style="font-size: 18px; color: #111827; margin-bottom: 0;">&#128161; Qualified Student Initiatives</h3>
+      </div>
+
+      <!-- Initiative Approval Card -->
+      <article class="card" style="background-color: #f8fafc; border: 1px solid #e2e8f0; margin-bottom: 0;">
+        <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px;">
+          <div>
+            <h4 style="font-size: 16px; color: #111827; margin-bottom: 4px;">Open-Air Study Lounge (Block 34)</h4>
+            <p style="font-size: 13px; color: #4b5563; margin-bottom: 0;">
+              Proposed by: <strong>Siddharth Kumar</strong> &bull; Total Community Upvotes: <strong>50/50</strong>
+            </p>
+          </div>
+          
+          <div id="welfareActionButtons" style="display: flex; gap: 10px;">
+            <button type="button" class="btn-secondary" style="color: #dc2626; border-color: #fca5a5;" onclick="reviewProposal('rejected')">
+              Reject
+            </button>
+            <button type="button" class="btn-action" onclick="reviewProposal('approved')">
+              &#10003; Approve Initiative
+            </button>
+          </div>
+        </div>
+      </article>
+    </section>
+
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>

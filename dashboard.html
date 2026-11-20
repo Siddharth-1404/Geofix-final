@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GeoFix - Student Dashboard</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="style-second.css">
+</head>
+<body>
+
+  <!-- Top Navigation Bar -->
+  <header class="navbar">
+    <div class="nav-brand">
+      <img src="logo_ff.png" alt="GeoFix Logo">
+      <h1>GeoFix Portal</h1>
+    </div>
+
+    <nav class="nav-links" aria-label="Student Navigation">
+      <a href="feed.html" class="nav-btn nav-btn-outline">&#127775; Campus Feed</a>
+      <a href="rewards.html" class="nav-btn">&#127942; My Wallet</a>
+      <a href="index.html" class="nav-btn" onclick="logoutUser()">Logout</a>
+    </nav>
+  </header>
+
+  <!-- Main Content Container (Centered Single Column Layout) -->
+  <main class="container dashboard-container">
+    
+    <!-- Header Section -->
+    <header class="page-header" style="margin-bottom: 20px;">
+      <h2 style="font-size: 26px; font-weight: 700; color: #0f172a; margin-bottom: 4px;">Create New Ticket</h2>
+      <p style="color: #64748b; font-size: 14px;">Log campus facility issues for immediate resolution.</p>
+    </header>
+
+    <!-- 1. Ticket Creation Card -->
+    <article class="ticket-card">
+      <form id="ticketForm" method="post" action="#" onsubmit="handleTicketSubmit(event)">
+        
+        <!-- STEP 1: CAPTURE ISSUE PHOTO -->
+        <div class="ticket-step">
+          <label class="step-label">1. CAPTURE ISSUE PHOTO</label>
+          <div class="photo-upload-wrapper">
+            <input 
+              type="file" 
+              id="ticketPhoto" 
+              accept="image/*" 
+              capture="environment" 
+              onchange="previewPhoto(this)"
+            >
+            <div class="photo-dashed-box" id="uploadLabel">
+              &#128247; Tap to Open Camera / Gallery
+            </div>
+          </div>
+
+          <!-- AI Processing Simulation (Hidden by default) -->
+          <div id="aiProcessingBox" class="ai-processing-box" style="display: none;">
+            <div class="spinner"></div>
+            <div class="processing-text">
+              <strong>AI Analyzing Issue Photo...</strong>
+              <p>Detecting facility category and severity level</p>
+            </div>
+          </div>
+
+          <!-- AI Verdict Box (Appears after analysis) -->
+          <div id="aiVerdictBox" class="ai-verdict-box" style="display: none;">
+            <div class="verdict-header">
+              <span class="verdict-tag">&#129302; AI Detected</span>
+            </div>
+            <p class="verdict-title">
+              Detected Issue: <strong>Plumbing Leakage (High Priority)</strong>
+            </p>
+            <div id="aiActionButtons" class="verdict-actions">
+              <button type="button" class="btn-confirm" onclick="setCategory('Plumbing')">
+                &#10003; Confirm
+              </button>
+              <button type="button" class="btn-edit" onclick="document.getElementById('manualCategoryBox').style.display='block'">
+                &#9998; Edit Manually
+              </button>
+            </div>
+            <!-- Manual Category Dropdown (Shown on Edit Manually) -->
+            <div id="manualCategoryBox" class="manual-category-box" style="display: none;">
+              <label for="manualCategorySelect">Select Category:</label>
+              <select id="manualCategorySelect" onchange="setCategory(this.value)">
+                <option value="Plumbing" selected>Plumbing</option>
+                <option value="Electrical">Electrical</option>
+                <option value="IT & Wi-Fi">IT & Wi-Fi</option>
+                <option value="Carpentry">Carpentry & Furniture</option>
+                <option value="Cleanliness">Cleanliness & Sanitation</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <!-- STEP 2: LOCATION VERIFICATION -->
+        <div class="ticket-step">
+          <label class="step-label">2. LOCATION VERIFICATION</label>
+          <div class="segmented-control" role="group" aria-label="Location Verification">
+            <button 
+              type="button" 
+              class="segment-btn active" 
+              id="btnQR" 
+              onclick="selectLocationMethod('QR')"
+            >
+              &#128247; Scan QR
+            </button>
+            <button 
+              type="button" 
+              class="segment-btn" 
+              id="btnGPS" 
+              onclick="selectLocationMethod('GPS')"
+            >
+              &#128205; Auto GPS
+            </button>
+          </div>
+
+          <!-- Location feedback bar -->
+          <div id="locationFeedback" class="location-info-box">
+            <span id="locationText">&#128247; Camera ready. Scan QR tag at facility.</span>
+          </div>
+        </div>
+
+        <!-- Subtle Horizontal Divider -->
+        <hr class="ticket-divider">
+
+        <!-- Golden/Amber Submit Button -->
+        <button type="submit" id="btnSubmitTicket" class="btn-submit-ticket">
+          Submit Ticket
+        </button>
+
+      </form>
+    </article>
+
+    <!-- 2. Recent Reports Card (Placed directly below Submit Ticket) -->
+    <article class="card" style="margin-top: 24px;">
+      <h3 class="card-title">Recent Reports</h3>
+      <ul id="recentReportsList" style="list-style: none;">
+        <li style="padding: 10px 0; border-bottom: 1px solid #f3f4f6; display: flex; justify-content: space-between; align-items: center;">
+          <div>
+            <strong style="font-size: 13px; display: block;">Wi-Fi down in Block 28</strong>
+            <small style="color: #9ca3af;">Ticket #TKT-104</small>
+          </div>
+          <span class="badge badge-pending">Pending</span>
+        </li>
+        <li style="padding: 10px 0; display: flex; justify-content: space-between; align-items: center;">
+          <div>
+            <strong style="font-size: 13px; display: block;">Broken desk in Lab 3</strong>
+            <small style="color: #9ca3af;">Ticket #TKT-102</small>
+          </div>
+          <span class="badge badge-resolved">Resolved</span>
+        </li>
+      </ul>
+    </article>
+
+    <!-- 3. Bottom Section: Student Profile & Civic Rewards Balance (Underneath on Laptop View Too) -->
+    <section class="bottom-info-grid" aria-label="Student Account and Rewards">
+      
+      <!-- Student Profile Card -->
+      <article class="card" style="margin-bottom: 0;">
+        <h3 class="card-title">Student Profile</h3>
+        <p><strong>Name:</strong> <span id="studentName">Siddharth Kumar</span></p>
+        <p style="margin-top: 6px;"><strong>Registration No:</strong> RK2P26BZB51</p>
+        <p style="margin-top: 6px;"><strong>Department:</strong> B.Tech CSE (1st Year)</p>
+      </article>
+
+      <!-- Civic Balance Card -->
+      <article class="card" style="margin-bottom: 0;">
+        <h3 class="card-title">Civic Balance</h3>
+        <p style="font-size: 36px; font-weight: bold; color: #25344F; line-height: 1;">
+          175 <span style="font-size: 15px; color: #25344F; font-weight: normal;">Points</span>
+        </p>
+        <p style="font-size: 13px; color: #64748b; margin: 10px 0 16px 0;">
+          Earn civic points every time your reported issue is verified and resolved.
+        </p>
+        <a href="rewards.html" class="nav-btn nav-btn-outline" style="text-align: center; display: block;">
+          View Rewards Store &rarr;
+        </a>
+      </article>
+
+    </section>
+
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>
